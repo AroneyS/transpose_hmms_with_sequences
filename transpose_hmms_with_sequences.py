@@ -38,6 +38,7 @@
 
 
 import argparse
+import logging
 import csv
 import os
 
@@ -58,6 +59,10 @@ NEW_VERSION_HMM_COLUMN = "r202"
 NEW_VERSION_NAME_COLUMN = "r202_name"
 output_dir = getattr(args, 'output')
 
+logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s',
+                        datefmt='%m/%d/%Y %I:%M:%S %p')
+
+logging.info("Creating HMM package-match and sequence-match dictionaries")
 with open(HMM_seq_list) as file:
     hmms = csv.reader(file, delimiter="\t")
     Seq_HMM = {line[0]:line[1] for line in hmms}
