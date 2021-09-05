@@ -6,7 +6,9 @@ GENE SEQUENCE...
 ```
 
 ## input [GENOME ID]_protein.fam (tsv):
+```
 [SEQUENCE ID]<tab>[HMM ID]
+```
 
 ## input hmms_and_names (tsv):
 Contains each [PACKAGE NAME] and their equivalent [HMM ID]
