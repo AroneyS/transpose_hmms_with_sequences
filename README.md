@@ -1,8 +1,9 @@
 # Inputs
 ## input [GENOME ID]_protein.fam.faa (fasta):
+```
 >[SEQUENCE ID]<space>[RANDOM TEXT]
-
 GENE SEQUENCE...
+```
 
 ## input [GENOME ID]_protein.fam (tsv):
 [SEQUENCE ID]<tab>[HMM ID]
@@ -12,9 +13,10 @@ Contains each [PACKAGE NAME] and their equivalent [HMM ID]
 
 # Outputs
 ## intended output HMM file [PACKAGE NAME].faa (fasta):
-> [GENOME ID]-[PACKAGE NAME]
-
+```
+>[GENOME ID]-[PACKAGE NAME]
 GENE SEQUENCE...
+```
 
 # Steps
 1. Open [GENOME ID]_protein.fam.faa fasta file and trawl through each sequence
