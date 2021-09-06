@@ -1,4 +1,4 @@
-# Take sequences from each genome file and produce sequences from each HMM file
+# Take genome fasta file with HMM matches and produce a HMM/spkg specific fasta file
 
 ## Inputs
 
