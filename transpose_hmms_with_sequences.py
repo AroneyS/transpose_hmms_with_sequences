@@ -13,7 +13,7 @@
 # [SEQUENCE ID]<tab>[HMM ID]
 
 # intended output HMM file [PACKAGE NAME].faa:
-# > [GENOME ID]-[PACKAGE NAME]
+# >[GENOME ID]-[PACKAGE NAME]
 # GENE SEQUENCE...
 
 
@@ -41,8 +41,8 @@ import argparse
 import logging
 import csv
 import os
-
-import pdb
+import re
+from Bio import SeqIO
 
 
 parser = argparse.ArgumentParser(description='Extract sequences into separate HMM files.')
@@ -53,6 +53,7 @@ parser.add_argument('--output', type=str, metavar='<OUTPUT>', help='path to outp
 
 args = parser.parse_args()
 input_path = getattr(args, 'input_fasta')
+genome_id = re.findall(r'(.*)_protein', os.path.basename(input_path))[0]
 HMM_seq_list = getattr(args, 'hmm_seq')
 HMM_id_list = getattr(args, 'hmm_spkg')
 NEW_VERSION_HMM_COLUMN = "r202"
@@ -61,6 +62,7 @@ output_dir = getattr(args, 'output')
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s',
                         datefmt='%m/%d/%Y %I:%M:%S %p')
+
 
 logging.info("Creating HMM package-match and sequence-match dictionaries")
 with open(HMM_seq_list) as file:
@@ -71,17 +73,28 @@ with open(HMM_id_list) as file:
     hmms = csv.DictReader(file, delimiter="\t")
     HMM_spkg = {line[NEW_VERSION_HMM_COLUMN]:line[NEW_VERSION_NAME_COLUMN] for line in hmms}
 
-os.listdir(output_dir)
+HMM_output = {spkg:{} for spkg in set(HMM_spkg.values())}
 
 
-# Open fasta file and trawl through each sequence
-# Use Seq_HMM to get HMM name from sequence ID
-# Use HMM_spkg to get spkg name from HMM name
-# Get genome ID from filename
-# Append sequence to spkg name file with ID of genome ID and spkg name
+logging.info(f"Load fasta file from {input_path}")
+for sequence in SeqIO.parse(input_path, "fasta"):
+    HMM_ID = Seq_HMM[sequence.id]
+    spkg = HMM_spkg[HMM_ID]
+    HMM_output[spkg] = sequence.seq
+    
+
+example_output_file = os.path.join(output_dir, list(HMM_output.keys())[0] + '.faa')
+logging.info(f"Save matching sequences in spkg files e.g. {example_output_file}")
+for spkg in HMM_output.keys():
+    if HMM_output[spkg] != {}:
+        with open(os.path.join(output_dir, spkg + ".faa"), 'a') as output_file:
+            # print(f">{genome_id}-{spkg}")
+            # print(HMM_output[spkg])
+            output_file.write(f">{genome_id}-{spkg}\n")
+            output_file.write(f"{HMM_output[spkg]}\n")
 
 
-#pdb.set_trace()
+
 
 
 
