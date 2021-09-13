@@ -117,12 +117,12 @@ for spkg in HMM_output.keys():
         with open(os.path.join(output_dir, spkg + ".faa"), 'a') as output_file:
             # print(f">{genome_id}-{spkg}")
             # print(HMM_output[spkg])
-            output_file.write(f">{genome_id}-{spkg}\n")
+            output_file.write(f">{genome_id}\n")
             output_file.write(f"{HMM_output[spkg]}\n")
 
         with open(os.path.join(output_dir, spkg + "_taxonomy.tsv"), 'a') as output_file:
             # print(f"{genome_id}-{spkg}\t{taxonomy[0]}")
-            output_file.write(f"{genome_id}-{spkg}\t{taxonomy[0]}\n")
+            output_file.write(f"{genome_id}\t{taxonomy[0]}\n")
 
 logging.info("Process complete")
 

@@ -30,14 +30,14 @@ Contains each [PACKAGE NAME] and their equivalent [HMM ID]
 ### intended output HMM file [PACKAGE NAME].faa (fasta)
 
 ```
->[GENOME ID]-[PACKAGE NAME]
+>[GENOME ID]
 GENE SEQUENCE...
 ```
 
 ### intended output taxonomy file [PACKAGE NAME]_taxonomy.tsv (tsv)
 
 ```
-[GENOME ID]-[PACKAGE NAME]<tab>[taxonomy]
+[GENOME ID]<tab>[taxonomy]
 ```
 
 ## Steps
@@ -46,6 +46,6 @@ GENE SEQUENCE...
 1. Use `[GENOME ID]_protein.fam` to get HMM name from sequence ID
 1. Use `hmms_and_names` to get spkg name from HMM name
 1. Get genome ID from fasta filename
-1. Append sequence to `[spkg name].faa` file with ID composed of genome ID and spkg name
+1. Append sequence to `[spkg name].faa` file with ID composed of genome ID
 1. Find genome ID and taxonomy from bacteria or archaea taxonomy file
 1. Append taxonomy to `[spkg name]_taxonomy.tsv` file with ID as above
